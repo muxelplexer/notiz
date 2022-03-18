@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "config.h"
 
 
@@ -14,6 +15,7 @@ const char doc_text[] = "Manage and display your notes from the commandline.";
 static struct argp_option options[] = {
     { NULL, 0, NULL, 0, "COMMANDS", 0},
     { "list", 'l', NULL, 0, "List notes", 0 },
+    { "add", 'a', "NOTE", 0, "Add a note", 0},
 
     { 0 }
 };
@@ -28,6 +30,10 @@ static error_t parse_opt(int key, char* arg, struct argp_state* state)
     {
         case 'l':
             args->cmd = CMD_LIST;
+            break;
+        case 'a':
+            args->cmd = CMD_ADD;
+            args->note = arg;
             break;
         case ARGP_KEY_ARG:
             if (state->arg_num == 0)

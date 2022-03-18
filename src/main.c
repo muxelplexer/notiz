@@ -1,4 +1,5 @@
 #include "termNote/cli-input.h"
+#include "termNote/commands.h"
 #include "config.h"
 
 
@@ -8,8 +9,11 @@ int main(int argc, char** argv)
     switch (cli.cmd)
     {
         case CMD_LIST:
-            printf("Listing Prototype.\n");
-            break; 
+            list();
+            break;
+        case CMD_ADD:
+            add(cli.note);
+            break;
         default:
             break;
     }
