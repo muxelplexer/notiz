@@ -2,5 +2,6 @@
 #define CONFIG_H
 
 #define PRJ_VERSION "@version@"
+#define PRJ_VERSION_STRING "termNote v@version@"
 
 #endif

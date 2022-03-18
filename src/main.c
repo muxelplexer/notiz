@@ -1,9 +1,18 @@
-#include <stdio.h>
-
+#include "termNote/cli-input.h"
 #include "config.h"
 
-int main() 
+
+int main(int argc, char** argv)
 {
-    printf("termNote v%s\n", PRJ_VERSION);
+    struct CLI_Args cli = parse_input(argc, argv);
+    switch (cli.cmd)
+    {
+        case CMD_LIST:
+            printf("Listing Prototype.\n");
+            break; 
+        default:
+            break;
+    }
+
     return 0;
 }

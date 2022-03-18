@@ -1,3 +1,4 @@
 termNote_srcs += [
-    files('main.c')
+    files('cli-input.c'),
+    files('main.c'),
 ]
