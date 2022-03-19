@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+#define MAX_NOTE_LENGTH 4069
+
 
 void list()
 {
@@ -19,7 +21,7 @@ void list()
         return;
     }
 
-    char line[256];
+    char line[MAX_NOTE_LENGTH];
     int i = 0;
     while (fgets(line, sizeof(line), noteFile))
     {
@@ -71,7 +73,8 @@ void delete(long id)
 
     FILE* tmp = fopen(tmpFile, "w+");
 
-    char line[256];
+    char line[MAX_NOTE_LENGTH];
+    char deletedLine[MAX_NOTE_LENGTH];
 
     int i = 0;
     while(fgets(line, sizeof(line), noteFile))
@@ -79,6 +82,8 @@ void delete(long id)
         if (i == id)
         {
             i++;
+            size_t lineLen = strlen(line);
+            strncpy(deletedLine, line, lineLen - 1);
             continue;
         }
         fprintf(tmp, "%s", line);
@@ -91,6 +96,8 @@ void delete(long id)
 
     remove(filePath);
     rename(tmpFile, filePath);
+
+    printf("Succesfully deleted Note \"[%ld] - %s\"\n", id, deletedLine);
 
     free(tmpFile);
     free(filePath);
