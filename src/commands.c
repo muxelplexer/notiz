@@ -14,7 +14,10 @@ void list()
     FILE* noteFile = fopen(filePath, "r");
 
     if (noteFile == NULL)
+    {
+        free(filePath);
         return;
+    }
 
     char line[256];
     int i = 0;
@@ -43,6 +46,7 @@ void add(const char* note_message)
     fprintf(noteFile, "%s\n", note_message);
 
     fclose(noteFile);
+    free(dataDir);
     free(filePath);
 }
 
