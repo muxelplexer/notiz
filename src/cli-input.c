@@ -46,7 +46,7 @@ static error_t parse_opt(int key, char* arg, struct argp_state* state)
             break;
         case ARGP_KEY_END:
             if (args->cmd == CMD_UNKNOWN)
-                argp_error(state, "No command specified.");
+                args->cmd = CMD_LIST;
             break;
         default:
             return ARGP_ERR_UNKNOWN;
