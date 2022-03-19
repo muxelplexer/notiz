@@ -82,8 +82,7 @@ void delete(long id)
         if (i == id)
         {
             i++;
-            size_t lineLen = strlen(line);
-            strncpy(deletedLine, line, lineLen - 1);
+            strncpy(deletedLine, line, MAX_NOTE_LENGTH);
             continue;
         }
         fprintf(tmp, "%s", line);
