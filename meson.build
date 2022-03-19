@@ -1,6 +1,6 @@
 project('termNote', 'c',
     version: '0.1.0',
-    license: ['proprietary'],
+    license: ['GPLv3'],
     default_options: ['warning_level=3', 'buildtype=debugoptimized', 'c_std=c11']
 )
 
