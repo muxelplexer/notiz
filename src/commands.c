@@ -1,5 +1,5 @@
-#include "termNote/commands.h"
-#include "termNote/utils.h"
+#include "notiz/commands.h"
+#include "notiz/utils.h"
 
 #include <stdlib.h>
 #include <string.h>

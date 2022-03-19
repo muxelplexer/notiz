@@ -1,5 +1,5 @@
-#include "termNote/cli-input.h"
-#include "termNote/commands.h"
+#include "notiz/cli-input.h"
+#include "notiz/commands.h"
 #include "config.h"
 
 

@@ -1,4 +1,4 @@
-#include "termNote/cli-input.h"
+#include "notiz/cli-input.h"
 
 #include <stdbool.h>
 #include <stdlib.h>

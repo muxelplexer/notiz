@@ -1,4 +1,4 @@
-project('termNote', 'c',
+project('notiz', 'c',
     version: '0.1.0',
     license: ['GPLv3'],
     default_options: ['warning_level=3', 'buildtype=debugoptimized', 'c_std=c11']
@@ -11,7 +11,7 @@ inc = include_directories('inc')
 subdir('inc')
 subdir('src')
 
-termNote_bin = executable('termNote',
+termNote_bin = executable('notiz',
     termNote_srcs,
     include_directories: inc,
     install: true

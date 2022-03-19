@@ -1,10 +1,10 @@
-#include "termNote/utils.h"
+#include "notiz/utils.h"
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 
 static const char FILE_NAME[] = "notes";
-static const char FILE_DIR[]  = "/termNote/";
+static const char FILE_DIR[]  = "/notiz/";
 
 
 char* GetDataPath()
