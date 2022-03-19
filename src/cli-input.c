@@ -16,6 +16,7 @@ static struct argp_option options[] = {
     { NULL, 0, NULL, 0, "COMMANDS", 0},
     { "list", 'l', NULL, 0, "List notes", 0 },
     { "add", 'a', "NOTE", 0, "Add a note", 0},
+    { "delete", 'd', "ID", 0, "Deletes a note", 0},
 
     { 0 }
 };
@@ -34,6 +35,10 @@ static error_t parse_opt(int key, char* arg, struct argp_state* state)
         case 'a':
             args->cmd = CMD_ADD;
             args->note = arg;
+            break;
+        case 'd':
+            args->cmd = CMD_DEL;
+            args->id = strtol(arg, NULL, 10);
             break;
         case ARGP_KEY_ARG:
             if (state->arg_num == 0)

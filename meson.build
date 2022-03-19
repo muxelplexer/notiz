@@ -1,5 +1,5 @@
 project('termNote', 'c',
-    version: '0.0.1',
+    version: '0.1.0',
     license: ['proprietary'],
     default_options: ['warning_level=3', 'buildtype=debugoptimized', 'c_std=c11']
 )
@@ -13,5 +13,6 @@ subdir('src')
 
 termNote_bin = executable('termNote',
     termNote_srcs,
-    include_directories: inc
+    include_directories: inc,
+    install: true
 )

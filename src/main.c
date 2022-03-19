@@ -14,6 +14,9 @@ int main(int argc, char** argv)
         case CMD_ADD:
             add(cli.note);
             break;
+        case CMD_DEL:
+            delete(cli.id);
+            break;
         default:
             break;
     }

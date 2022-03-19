@@ -11,7 +11,7 @@ static const char FILE_DIR[]  = "/termNote/";
 char* GetDataPath()
 {
     const char* XDG_DATA_HOME = getenv("XDG_DATA_HOME");
-    char* dataPath;
+    char* dataPath = "";
     if (XDG_DATA_HOME != NULL)
     {
         size_t xdg_len = strlen(XDG_DATA_HOME);
@@ -21,7 +21,7 @@ char* GetDataPath()
         maxLen += strlen(FILE_NAME);
 
         dataPath = (char*) malloc(maxLen + 1);
-        strcat(dataPath, XDG_DATA_HOME);
+        strcpy(dataPath, XDG_DATA_HOME);
         if (XDG_DATA_HOME[xdg_len - 1] == '/')
             strcat(dataPath, &FILE_DIR[1]);
         else
@@ -40,7 +40,7 @@ char* GetDataPath()
         maxLen += strlen(FILE_DIR);
 
         dataPath = (char*) malloc(maxLen + 1);
-        strcat(dataPath, HOME);
+        strcpy(dataPath, HOME);
         strcat(dataPath, subDir);
         strcat(dataPath, FILE_DIR);
     }
@@ -95,5 +95,51 @@ void add(const char* note_message)
     fprintf(noteFile, "%s\n", note_message);
 
     fclose(noteFile);
+    free(filePath);
+}
+
+void delete(long id)
+{
+    char* filePath = GetFilePath();
+    const char* tmpFileName = "notes.tmp";
+
+    char* dataPath = GetDataPath();
+    char* tmpFile = (char*) malloc(strlen(dataPath) + strlen(tmpFileName) + 1);
+    strcpy(tmpFile, dataPath);
+    strcat(tmpFile, tmpFileName);
+    free(dataPath);
+
+    FILE* noteFile = fopen(filePath, "r");
+
+    if (noteFile == NULL)
+    {
+        free(filePath);
+        return;
+    }
+
+    FILE* tmp = fopen(tmpFile, "w+");
+
+    char line[256];
+
+    int i = 0;
+    while(fgets(line, sizeof(line), noteFile))
+    {
+        if (i == id)
+        {
+            i++;
+            continue;
+        }
+        fprintf(tmp, "%s", line);
+        i++;
+    }
+    fclose(noteFile);
+    fclose(tmp);
+
+
+
+    remove(filePath);
+    rename(tmpFile, filePath);
+
+    free(tmpFile);
     free(filePath);
 }
