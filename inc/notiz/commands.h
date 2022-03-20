@@ -3,6 +3,6 @@
 
 void list();
 void add(const char* note_message);
-void delete(long id);
+void delete(int* ids, int num);
 
 #endif

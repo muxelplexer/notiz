@@ -1,5 +1,8 @@
+#include <stdlib.h>
+
 #include "notiz/cli-input.h"
 #include "notiz/commands.h"
+#include "notiz/utils.h"
 #include "config.h"
 
 
@@ -15,7 +18,8 @@ int main(int argc, char** argv)
             add(cli.note);
             break;
         case CMD_DEL:
-            delete(cli.id);
+            delete(cli.id, cli.idNum);
+            free(cli.id);
             break;
         default:
             break;

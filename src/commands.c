@@ -2,12 +2,12 @@
 #include "notiz/utils.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
 
-#define MAX_NOTE_LENGTH 4069
 
 
 void list()
@@ -48,11 +48,12 @@ void add(const char* note_message)
     fprintf(noteFile, "%s\n", note_message);
 
     fclose(noteFile);
+    closedir(dir);
     free(dataDir);
     free(filePath);
 }
 
-void delete(long id)
+void delete(int* ids, int num)
 {
     char* filePath = GetFilePath();
     const char* tmpFileName = "notes.tmp";
@@ -74,17 +75,26 @@ void delete(long id)
     FILE* tmp = fopen(tmpFile, "w+");
 
     char line[MAX_NOTE_LENGTH];
+
     char deletedLine[MAX_NOTE_LENGTH];
 
     int i = 0;
     while(fgets(line, sizeof(line), noteFile))
     {
-        if (i == id)
+        bool deleted = false;
+
+        for(int j = 0; j < num; j++)
         {
-            i++;
-            strncpy(deletedLine, line, MAX_NOTE_LENGTH);
-            continue;
+            if(i == ids[j])
+            {
+                i++;
+                strncpy(deletedLine, line, MAX_NOTE_LENGTH);
+                deleted = true;
+            }
         }
+        if(deleted)
+            continue;
+
         fprintf(tmp, "%s", line);
         i++;
     }
@@ -96,7 +106,8 @@ void delete(long id)
     remove(filePath);
     rename(tmpFile, filePath);
 
-    printf("Succesfully deleted Note \"[%ld] - %s\"\n", id, deletedLine);
+    printf("Succesfully deleted %d notes.\n", num);
+
 
     free(tmpFile);
     free(filePath);

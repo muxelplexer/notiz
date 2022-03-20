@@ -1,4 +1,5 @@
 #include "notiz/cli-input.h"
+#include "notiz/utils.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -13,10 +14,10 @@ const char doc_text[] = "Manage and display your notes from the commandline.";
 
 
 static struct argp_option options[] = {
-    { NULL, 0, NULL, 0, "COMMANDS", 0},
-    { "list", 'l', NULL, 0, "List notes", 0 },
-    { "add", 'a', "NOTE", 0, "Add a note", 0},
-    { "delete", 'd', "ID", 0, "Deletes a note", 0},
+    { "list", 'l', NULL, 0, "List all entries", 0 },
+    { "add", 'a', "NOTE", 0, "Adds a entry", 0},
+    { "delete", 'd', "ID", 0, "Deletes [n]th entry", 0},
+    { "delete", 'd', "IDs", 0, "Deletes [n] entries", 0},
 
     { 0 }
 };
@@ -38,7 +39,8 @@ static error_t parse_opt(int key, char* arg, struct argp_state* state)
             break;
         case 'd':
             args->cmd = CMD_DEL;
-            args->id = strtol(arg, NULL, 10);
+            args->id = allocIDs();
+            args->idNum = parseIDS(args->id, arg);
             break;
         case ARGP_KEY_ARG:
             if (state->arg_num == 0)
@@ -60,6 +62,7 @@ struct CLI_Args parse_input(int argc, char** argv)
 {
     struct CLI_Args args;
     args.cmd = CMD_UNKNOWN;
+    args.idNum = 0;
 
     argp_parse(&argp, argc, argv, 0, 0, &args);
 

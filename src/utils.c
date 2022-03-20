@@ -1,7 +1,9 @@
 #include "notiz/utils.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <dirent.h>
+#include <ctype.h>
 
 static const char FILE_NAME[] = "notes";
 static const char FILE_DIR[]  = "/notiz/";
@@ -56,4 +58,50 @@ char* GetFilePath()
 
     strcat(filePath, FILE_NAME);
     return filePath;
+}
+
+int GetNoteCount()
+{
+    char* filePath = GetFilePath();
+    FILE* noteFile = fopen(filePath, "r");
+
+    if (noteFile == NULL)
+    {
+        free(filePath);
+        return 0;
+    }
+
+    char line[MAX_NOTE_LENGTH];
+    int i = 0;
+    while (fgets(line, sizeof(line), noteFile))
+    {
+        i++;
+    }
+
+    fclose(noteFile);
+    free(filePath);
+    return i;
+}
+
+int parseIDS(int* ids, char* args)
+{
+    size_t len = strlen(args);
+    int ids_cnt = 0;
+
+    for(size_t i = 0; i < len; i++)
+    {
+        if(isdigit(args[i]))
+        {
+            ids[ids_cnt] = args[i] - '0';
+            ids_cnt++;
+        }
+    }
+    return ids_cnt;
+}
+
+int* allocIDs()
+{
+    int maxSize = GetNoteCount();
+    
+    return (int*)malloc(maxSize * sizeof(int));
 }

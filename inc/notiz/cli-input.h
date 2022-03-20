@@ -15,8 +15,9 @@ struct CLI_Args
     COMMAND cmd;
     union {
         const char* note;
-        long id;
+        int* id;
     };
+    int idNum;
 };
 
 struct CLI_Args parse_input(int argc, char** argv);
