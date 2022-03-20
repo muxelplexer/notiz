@@ -78,6 +78,8 @@ void delete(int* ids, int num)
 
     char deletedLine[MAX_NOTE_LENGTH];
 
+    int delCnt = 0;
+
     int i = 0;
     while(fgets(line, sizeof(line), noteFile))
     {
@@ -89,6 +91,7 @@ void delete(int* ids, int num)
             {
                 i++;
                 strncpy(deletedLine, line, MAX_NOTE_LENGTH);
+                delCnt++;
                 deleted = true;
             }
         }
@@ -106,7 +109,10 @@ void delete(int* ids, int num)
     remove(filePath);
     rename(tmpFile, filePath);
 
-    printf("Succesfully deleted %d notes.\n", num);
+    if (num == 1)
+        printf("Succesfully deleted %d note.\n", delCnt);
+    else
+        printf("Succesfully deleted %d notes.\n", delCnt);
 
 
     free(tmpFile);

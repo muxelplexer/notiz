@@ -88,13 +88,30 @@ int parseIDS(int* ids, char* args)
     size_t len = strlen(args);
     int ids_cnt = 0;
 
+    char numbuf[2048];
+    numbuf[0] = '\0';
+    int nbCnt = 0;
+
     for(size_t i = 0; i < len; i++)
     {
         if(isdigit(args[i]))
         {
-            ids[ids_cnt] = args[i] - '0';
-            ids_cnt++;
+            numbuf[nbCnt] = args[i];
+            nbCnt++;
         }
+        if(args[i] == ',')
+        {
+            numbuf[nbCnt + 1] = '\0';
+            ids[ids_cnt] = atoi(numbuf);
+            ids_cnt++;
+            nbCnt = 0;
+            numbuf[0] = '\0';
+        }
+    }
+    if (numbuf[0] != '\0')
+    {
+        ids[ids_cnt] = atoi(numbuf);
+        ids_cnt++;
     }
     return ids_cnt;
 }
